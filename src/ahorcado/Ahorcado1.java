@@ -20,7 +20,7 @@ public class Ahorcado1 extends javax.swing.JFrame {
     char[] palabraCambia;
     int fallos;
     char letra;
-    private static final Logger LOG = Logger.getLogger(Ahorcado1.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Ahorcado1.class.getName());
 
     public Ahorcado1() {
         initComponents();
@@ -133,7 +133,7 @@ public class Ahorcado1 extends javax.swing.JFrame {
         try {
             letra = letter.charAt(0);
         } catch (IndexOutOfBoundsException ex) {
-            LOG.warning("No se ha introducido una letra " + ex.toString());
+            LOGGER.warning("No se ha introducido una letra: " + ex.toString());
             JOptionPane.showMessageDialog(this, "Debe introducir una letra",
                     "Ahorcado", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -154,12 +154,14 @@ public class Ahorcado1 extends javax.swing.JFrame {
                 }
             }
         } catch (NullPointerException e) {
-            LOG.warning("No se ha introducido una palabra " + e.toString());
+            LOGGER.warning("No se ha introducido una palabra: " + e.toString());
             JOptionPane.showMessageDialog(this, "Debe introducir una palabra",
                     "Ahorcado", JOptionPane.INFORMATION_MESSAGE);
         }
         if (palabra.contains(letter) == false) {
                 fallos++;
+            /*Si la letra que introducimos no coincide con ninguna de las letras 
+            de la palabras el contador de fallos aumentará*/
         }
         jLabelContadorFallos.setText(String.valueOf(fallos));
         jLabelPalabraVariable.setText(palabraVacia);
@@ -173,6 +175,14 @@ public class Ahorcado1 extends javax.swing.JFrame {
             fallos = 0;
             jLabelContadorFallos.setText(String.valueOf(fallos));
             JOptionPane.showMessageDialog(this, "Has perdido", "Ahorcado",
+                    JOptionPane.INFORMATION_MESSAGE);
+            /*Una vez que los fallos lleguen a 6 el jugador pierde y reseteamos 
+            los campos y el contador de fallos*/
+        }
+        if (palabraVacia.contains ("_") == false){
+            jTextFieldIntroducirLetra.setEditable(false);
+            jButtonComprobar.setEnabled(false);
+            JOptionPane.showMessageDialog(this, "Has ganado", "Ahorcado",
                     JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButtonComprobarActionPerformed
