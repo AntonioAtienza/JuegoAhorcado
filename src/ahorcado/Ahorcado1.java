@@ -24,6 +24,8 @@ public class Ahorcado1 extends javax.swing.JFrame {
 
     public Ahorcado1() {
         initComponents();
+        this.setTitle("Ahorcado");
+        jTextArea1.setEditable(false);
     }
 
     /**
