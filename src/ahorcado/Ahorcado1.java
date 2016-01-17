@@ -127,7 +127,13 @@ public class Ahorcado1 extends javax.swing.JFrame {
 
     private void jButtonComprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonComprobarActionPerformed
         letter = jTextFieldIntroducirLetra.getText().trim();
-        letra = letter.charAt(0);
+        try {
+            letra = letter.charAt(0);
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println(ex);
+            
+        }
+        
         for (int i = 0; i < palabra.length(); i++) {
             if (letra == palabra.charAt(i)) {
                 /*Convertimos el string palabraVacia en un array para conseguir 
