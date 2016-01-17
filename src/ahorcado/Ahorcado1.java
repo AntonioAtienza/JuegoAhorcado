@@ -6,6 +6,7 @@
 package ahorcado;
 
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,7 +25,10 @@ public class Ahorcado1 extends javax.swing.JFrame {
 
     public Ahorcado1() {
         initComponents();
+         setIconImage(new ImageIcon(getClass().getResource("/imagenes/ahorcado.png"))
+                .getImage());
         this.setTitle("Ahorcado");
+        this.setLocationRelativeTo(null);
         jTextArea1.setEditable(false);
     }
 
