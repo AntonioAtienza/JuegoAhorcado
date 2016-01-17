@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package ahorcado;
+
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Antonio
@@ -130,10 +133,10 @@ public class Ahorcado1 extends javax.swing.JFrame {
         try {
             letra = letter.charAt(0);
         } catch (IndexOutOfBoundsException ex) {
-            System.out.println(ex);
-            
+            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(this, "Debe introducir una letra", 
+                    "Ahorcado", JOptionPane.INFORMATION_MESSAGE);
         }
-        
         for (int i = 0; i < palabra.length(); i++) {
             if (letra == palabra.charAt(i)) {
                 /*Convertimos el string palabraVacia en un array para conseguir 
@@ -159,7 +162,8 @@ public class Ahorcado1 extends javax.swing.JFrame {
         if (fallos == 6) {
             jTextFieldIntroducirLetra.setEditable(false);
             jButtonComprobar.setEnabled(false);
-            System.out.println("Perdedor");
+            JOptionPane.showMessageDialog(this, "Has perdido", 
+                    "Ahorcado", JOptionPane.INFORMATION_MESSAGE);
         }
         jLabelContadorFallos.setText(String.valueOf(fallos));
     }//GEN-LAST:event_jButtonComprobarActionPerformed
