@@ -13,19 +13,16 @@ import javax.swing.JOptionPane;
  */
 public class Ahorcado1 extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Ahorcado1
-     */
-    public Ahorcado1() {
-        initComponents();
-    }
     String letter;
     String palabra;
     String palabraVacia = "";
     char[] palabraCambia;
     int fallos;
     char letra;
-
+    
+    public Ahorcado1() {
+        initComponents();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,8 +159,8 @@ public class Ahorcado1 extends javax.swing.JFrame {
         if (fallos == 6) {
             jTextFieldIntroducirLetra.setEditable(false);
             jButtonComprobar.setEnabled(false);
-            JOptionPane.showMessageDialog(this, "Has perdido", 
-                    "Ahorcado", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Has perdido", "Ahorcado", 
+                    JOptionPane.INFORMATION_MESSAGE);
         }
         jLabelContadorFallos.setText(String.valueOf(fallos));
     }//GEN-LAST:event_jButtonComprobarActionPerformed
