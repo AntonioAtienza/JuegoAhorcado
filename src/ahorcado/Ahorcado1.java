@@ -5,6 +5,7 @@
  */
 package ahorcado;
 
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,10 +20,12 @@ public class Ahorcado1 extends javax.swing.JFrame {
     char[] palabraCambia;
     int fallos;
     char letra;
-    
+    private static final Logger LOG = Logger.getLogger(Ahorcado1.class.getName());
+
     public Ahorcado1() {
         initComponents();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,39 +133,48 @@ public class Ahorcado1 extends javax.swing.JFrame {
         try {
             letra = letter.charAt(0);
         } catch (IndexOutOfBoundsException ex) {
-            System.out.println(ex.toString());
-            JOptionPane.showMessageDialog(this, "Debe introducir una letra", 
+            LOG.warning("No se ha introducido una letra " + ex.toString());
+            JOptionPane.showMessageDialog(this, "Debe introducir una letra",
                     "Ahorcado", JOptionPane.INFORMATION_MESSAGE);
         }
-        for (int i = 0; i < palabra.length(); i++) {
-            if (letra == palabra.charAt(i)) {
-                /*Convertimos el string palabraVacia en un array para conseguir 
-                que cada caracter este en una posición del array para poder 
-                modificarlo posteriormente*/
-                palabraCambia = palabraVacia.toCharArray();
-                /*En la posición de la palabra donde el caracter sea igual a la 
-                letra introducida,  asignamos la letra introducida, csmbiando 
-                el _ por la letra introducida*/
-                palabraCambia[i] = letra;
-                /*Como palabraCambia es un array de caracteres, cambiamos el tipo 
-                de dato a string*/
-                palabraVacia = String.valueOf(palabraCambia);
+        try {
+            for (int i = 0; i < palabra.length(); i++) {
+                if (letra == palabra.charAt(i)) {
+                    /*Convertimos el string palabraVacia en un array para conseguir 
+                    que cada caracter este en una posición del array para poder 
+                    modificarlo posteriormente*/
+                    palabraCambia = palabraVacia.toCharArray();
+                    /*En la posición de la palabra donde el caracter sea igual a la 
+                    letra introducida,  asignamos la letra introducida, csmbiando 
+                    el _ por la letra introducida*/
+                    palabraCambia[i] = letra;
+                    /*Como palabraCambia es un array de caracteres, cambiamos el tipo 
+                    de dato a string*/
+                    palabraVacia = String.valueOf(palabraCambia);
+                }
             }
+        } catch (NullPointerException e) {
+            LOG.warning("No se ha introducido una palabra " + e.toString());
+            JOptionPane.showMessageDialog(this, "Debe introducir una palabra",
+                    "Ahorcado", JOptionPane.INFORMATION_MESSAGE);
         }
         if (palabra.contains(letter) == false) {
-            fallos++;
+                fallos++;
         }
-        System.out.println(fallos);
+        jLabelContadorFallos.setText(String.valueOf(fallos));
         jLabelPalabraVariable.setText(palabraVacia);
         jTextArea1.append(letra + " ");
         jTextFieldIntroducirLetra.setText("");
         if (fallos == 6) {
             jTextFieldIntroducirLetra.setEditable(false);
             jButtonComprobar.setEnabled(false);
-            JOptionPane.showMessageDialog(this, "Has perdido", "Ahorcado", 
+            jTextArea1.setText("");
+            jLabelPalabraVariable.setText ("");
+            fallos = 0;
+            jLabelContadorFallos.setText(String.valueOf(fallos));
+            JOptionPane.showMessageDialog(this, "Has perdido", "Ahorcado",
                     JOptionPane.INFORMATION_MESSAGE);
         }
-        jLabelContadorFallos.setText(String.valueOf(fallos));
     }//GEN-LAST:event_jButtonComprobarActionPerformed
 
     private void jButtonJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonJugarActionPerformed
@@ -170,6 +182,7 @@ public class Ahorcado1 extends javax.swing.JFrame {
         jButtonComprobar.setEnabled(true);
         palabraVacia = "";
         fallos = 0;
+        jLabelContadorFallos.setText(String.valueOf(fallos));
         palabra = jTextFieldIntroducirPalabra.getText();
         jTextFieldIntroducirPalabra.setText("");
         for (int i = 0; i < palabra.length(); i++) {
