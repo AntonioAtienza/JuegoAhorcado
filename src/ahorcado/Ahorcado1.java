@@ -4,9 +4,6 @@
  * and open the template in the editor.
  */
 package ahorcado;
-
-import java.awt.Color;
-
 /**
  *
  * @author Antonio
