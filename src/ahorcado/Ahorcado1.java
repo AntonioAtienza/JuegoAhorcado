@@ -11,24 +11,25 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Antonio
+ * @author Antonio Rojo Atienza
  */
 public class Ahorcado1 extends javax.swing.JFrame {
 
     String letter;
     String palabra;
-    String palabraVacia = "";
-    char[] palabraCambia;
+    String palabraVacia = "_";
+    String palabraCambia = "";
     int fallos;
     char letra;
     private static final Logger LOGGER = Logger.getLogger(Ahorcado1.class.getName());
 
     public Ahorcado1() {
         initComponents();
-         setIconImage(new ImageIcon(getClass().getResource("/imagenes/ahorcado.png"))
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/ahorcado.png"))
                 .getImage());
         this.setTitle("Ahorcado");
         this.setLocationRelativeTo(null);
+        getRootPane().setDefaultButton(jButtonComprobar);
         jTextArea1.setEditable(false);
     }
 
@@ -144,39 +145,47 @@ public class Ahorcado1 extends javax.swing.JFrame {
 
     private void jButtonComprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonComprobarActionPerformed
         letter = jTextFieldIntroducirLetra.getText().trim();
+        palabraCambia = "";
         try {
-            letra = letter.charAt(0);
+            if (jTextFieldIntroducirPalabra.getText().length() == 0) {
+                letra = letter.charAt(0);
+            } else {
+                JOptionPane.showMessageDialog(this, "Debes introducir solo un caracter",
+                        "Ahorcado", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (IndexOutOfBoundsException ex) {
             LOGGER.warning("No se ha introducido una letra: " + ex.toString());
             JOptionPane.showMessageDialog(this, "Debe introducir una letra",
-                    "Ahorcado", JOptionPane.INFORMATION_MESSAGE);
+                    "Ahorcado", JOptionPane.ERROR_MESSAGE);
         }
         try {
             for (int i = 0; i < palabra.length(); i++) {
                 if (letra == palabra.charAt(i)) {
-                    /*Convertimos el string palabraVacia en un array para conseguir 
-                    que cada caracter este en una posición del array para poder 
-                    modificarlo posteriormente*/
-                    palabraCambia = palabraVacia.toCharArray();
-                    /*En la posición de la palabra donde el caracter sea igual a la 
-                    letra introducida,  asignamos la letra introducida, csmbiando 
-                    el _ por la letra introducida*/
-                    palabraCambia[i] = letra;
-                    /*Como palabraCambia es un array de caracteres, cambiamos el tipo 
-                    de dato a string*/
-                    palabraVacia = String.valueOf(palabraCambia);
+                    palabraCambia += letra;
+                    /*Se guarda el caracter que introduce el usuario ,si coincide 
+                    con la palabra, en el string temporal*/
+                } else {
+                    palabraCambia += palabraVacia.charAt(i);
+                    //Si no coincide guardamos lo que haya en el string temporal
                 }
+            }
+            palabraVacia = palabraCambia;
+
+            for (int i = 0; i < palabraVacia.length(); i++) {
+                jLabelPalabraVariable.setText(String.valueOf(palabraCambia.charAt(i)));
+            }
+
+            if (palabra.contains(letter) == false) {
+                fallos++;
+                /*Si la letra que introducimos no coincide con ninguna de las letras 
+            de la palabras el contador de fallos aumentará*/
             }
         } catch (NullPointerException e) {
             LOGGER.warning("No se ha introducido una palabra: " + e.toString());
             JOptionPane.showMessageDialog(this, "Debe introducir una palabra",
-                    "Ahorcado", JOptionPane.INFORMATION_MESSAGE);
+                    "Ahorcado", JOptionPane.ERROR_MESSAGE);
         }
-        if (palabra.contains(letter) == false) {
-                fallos++;
-            /*Si la letra que introducimos no coincide con ninguna de las letras 
-            de la palabras el contador de fallos aumentará*/
-        }
+        //Mostramos el contador de fallos en el jLabel
         jLabelContadorFallos.setText(String.valueOf(fallos));
         jLabelPalabraVariable.setText(palabraVacia);
         jTextArea1.append(letra + " ");
@@ -185,15 +194,15 @@ public class Ahorcado1 extends javax.swing.JFrame {
             jTextFieldIntroducirLetra.setEditable(false);
             jButtonComprobar.setEnabled(false);
             jTextArea1.setText("");
-            jLabelPalabraVariable.setText ("");
+            jLabelPalabraVariable.setText("");
             fallos = 0;
             jLabelContadorFallos.setText(String.valueOf(fallos));
-            JOptionPane.showMessageDialog(this, "Has perdido", "Ahorcado",
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Has perdido, la palabra era: " + palabra, 
+                    "Ahorcado", JOptionPane.INFORMATION_MESSAGE);
             /*Una vez que los fallos lleguen a 6 el jugador pierde y reseteamos 
             los campos y el contador de fallos*/
         }
-        if (palabraVacia.contains ("_") == false){
+        if (palabraVacia.contains("_") == false) {
             jTextFieldIntroducirLetra.setEditable(false);
             jButtonComprobar.setEnabled(false);
             JOptionPane.showMessageDialog(this, "Has ganado", "Ahorcado",
@@ -202,12 +211,12 @@ public class Ahorcado1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonComprobarActionPerformed
 
     private void jButtonJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonJugarActionPerformed
-        jTextFieldIntroducirLetra.setEditable(true);
-        jButtonComprobar.setEnabled(true);
+        palabra = jTextFieldIntroducirPalabra.getText();
         palabraVacia = "";
         fallos = 0;
         jLabelContadorFallos.setText(String.valueOf(fallos));
-        palabra = jTextFieldIntroducirPalabra.getText();
+        jTextFieldIntroducirLetra.setEditable(true);
+        jButtonComprobar.setEnabled(true);
         jTextFieldIntroducirPalabra.setText("");
         for (int i = 0; i < palabra.length(); i++) {
             palabraVacia += "_";
