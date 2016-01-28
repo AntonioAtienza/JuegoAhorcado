@@ -147,7 +147,7 @@ public class Ahorcado1 extends javax.swing.JFrame {
         letter = jTextFieldIntroducirLetra.getText().trim();
         palabraCambia = "";
         try {
-            if (jTextFieldIntroducirPalabra.getText().length() == 0) {
+            if (jTextFieldIntroducirLetra.getText().length() == 1) {
                 letra = letter.charAt(0);
             } else {
                 JOptionPane.showMessageDialog(this, "Debes introducir solo un caracter",
@@ -174,8 +174,8 @@ public class Ahorcado1 extends javax.swing.JFrame {
             for (int i = 0; i < palabraVacia.length(); i++) {
                 jLabelPalabraVariable.setText(String.valueOf(palabraCambia.charAt(i)));
             }
-
-            if (palabra.contains(letter) == false) {
+            
+            if (!palabra.contains(letter)) {
                 fallos++;
                 /*Si la letra que introducimos no coincide con ninguna de las letras 
             de la palabras el contador de fallos aumentará*/
@@ -202,7 +202,7 @@ public class Ahorcado1 extends javax.swing.JFrame {
             /*Una vez que los fallos lleguen a 6 el jugador pierde y reseteamos 
             los campos y el contador de fallos*/
         }
-        if (palabraVacia.contains("_") == false) {
+        if (!palabraVacia.contains("_")) {
             jTextFieldIntroducirLetra.setEditable(false);
             jButtonComprobar.setEnabled(false);
             JOptionPane.showMessageDialog(this, "Has ganado", "Ahorcado",
