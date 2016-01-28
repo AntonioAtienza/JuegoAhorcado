@@ -20,6 +20,7 @@ public class Ahorcado1 extends javax.swing.JFrame {
     String palabraVacia = "_";
     String palabraCambia = "";
     int fallos;
+    final int MAX_FALLOS = 6;
     char letra;
     private static final Logger LOGGER = Logger.getLogger(Ahorcado1.class.getName());
 
@@ -190,7 +191,7 @@ public class Ahorcado1 extends javax.swing.JFrame {
         jLabelPalabraVariable.setText(palabraVacia);
         jTextArea1.append(letra + " ");
         jTextFieldIntroducirLetra.setText("");
-        if (fallos == 6) {
+        if (fallos == MAX_FALLOS) {
             jTextFieldIntroducirLetra.setEditable(false);
             jButtonComprobar.setEnabled(false);
             jTextArea1.setText("");
